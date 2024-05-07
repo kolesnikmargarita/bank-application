@@ -53,6 +53,43 @@ public class UserService {
         return userMapper.toDto(user);
     }
 
+    // обновим всю информацию о пользователе
+    public UserDto updateUser(Long id, UpdateUserDto dto) {
+        final Optional<User> optionalUser = userRepository.findById(id);
+
+        if (optionalUser.isEmpty()) {
+            throw new EntityNotFoundException("Пользователь не найден");
+        }
+
+        final User user = optionalUser.get();
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setPhoneNumber(dto.getPhoneNumber());
+
+        return userMapper.toDto(userRepository.save(user));
+    }
+
+    // обновим часть информации о пользователе
+    public UserDto updateUserPartially(Long id, UpdateUserDto dto) {
+        final Optional<User> optionalUser = userRepository.findById(id);
+
+        if (optionalUser.isEmpty()) {
+            throw new EntityNotFoundException("Пользователь не найден");
+        }
+
+        final User user = optionalUser.get();
+        if(dto.getFirstName() != null) {
+            user.setFirstName(dto.getFirstName());
+        }
+        if(dto.getLastName() != null) {
+            user.setLastName(dto.getLastName());
+        }
+        if(dto.getPhoneNumber() != null){
+            user.setPhoneNumber(dto.getPhoneNumber());
+        }
+
+        return userMapper.toDto(userRepository.save(user));
+    }
 
     // удалим пользователя
     public void removeById(Long id) {
