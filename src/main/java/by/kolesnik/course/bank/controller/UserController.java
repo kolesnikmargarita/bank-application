@@ -35,7 +35,19 @@ public class UserController {
         return userService.createUser(dto);
     }
 
+    // put
+    @PutMapping("/{id}")
+    //@ResponseStatus(HttpStatus.NO_CONTENT)
+    public UserDto updateUser(@PathVariable Long id, @RequestBody UpdateUserDto dto) {
+        return userService.updateUser(id, dto);
+    }
 
+    // patch
+    @PatchMapping("/{id}")
+    //@ResponseStatus(HttpStatus.NO_CONTENT)
+    public UserDto updateUserPartially(@PathVariable Long id, @RequestBody UpdateUserDto dto) {
+        return userService.updateUserPartially(id, dto);
+    }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
